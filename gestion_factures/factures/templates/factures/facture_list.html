@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des factures{% endblock %}
+
+{% block content %}
+<h1>Liste des factures</h1>
+    
+    <form method="GET" action=".">
+        <label for="client">Filtrer par client :</label>
+        <select name="client_id" id="client">
+            <option value="">-- Tous les clients --</option>
+            {% for client in clients %}
+                <option value="{{ client.id }}" {% if client.id == request.GET.client_id %}selected{% endif %}>{{ client.nom }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Filtrer</button>
+    </form>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Client</th>
+                <th>Description</th>
+                <th>Montant</th>
+                <th>Catégorie</th>
+                <th>Date d'émission</th>
+                <th>Payée</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for facture in factures %}
+            <tr>
+                <td>{{ facture.titre }}</td>
+                <td>{{ facture.client.nom }}</td>
+                <td>{{ facture.description }}</td>
+                <td>{{ facture.montant }}</td>
+                <td>{{ facture.categorie.nom }}</td>
+                <td>{{ facture.date_emission }}</td>
+                <td>{{ facture.est_paye|yesno:"Oui,Non" }}</td>
+                <td>
+                    <a href="{% url 'facture_detail' facture.id %}">Voir</a> |
+                    <a href="{% url 'facture_update' facture.id %}">Modifier</a> |
+                    <a href="{% url 'facture_delete' facture.id %}">Supprimer</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

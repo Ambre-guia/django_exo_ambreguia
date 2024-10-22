@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Détails de la facture{% endblock %}
+
+{% block content %}
+    <h1>Détails de la facture {{ facture.titre }}</h1>
+    <p>Client : {{ facture.client.nom }}</p>
+    <p>Description : {{ facture.description }}</p>
+    <p>Montant : {{ facture.montant }}</p>
+    <p>Catégorie : {{ facture.categorie.nom }}</p>
+    <p>Date d'émission : {{ facture.date_emission }}</p>
+    <p>Date de paiement : {{ facture.date_paiement }}</p>
+    <p>Payée : {{ facture.est_paye|yesno:"Oui,Non" }}</p>
+
+    <a href="{% url 'facture_update' facture.id %}">Modifier</a> |
+    <a href="{% url 'facture_delete' facture.id %}">Supprimer</a> |
+    <a href="{% url 'facture_list' %}">Retour à la liste</a>
+
+{% endblock %}

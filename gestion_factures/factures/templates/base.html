@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Gestion des factures{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="{% url 'facture_list' %}">Liste des factures</a></li>
+        <li><a href="{% url 'facture_create' %}">Créer une facture</a></li>
+        <li><a href="{% url 'client_create' %}">Créer un client</a></li>
+        <li><a href="{% url 'categorie_create' %}">Créer une catégorie</a></li>
+      </ul>
+    </nav>
+
+    <div class="content">
+      {% block content %}
+      <!-- Contenu de chaque page -->
+      {% endblock %}
+    </div>
+
+    <footer>
+      <p>Gestion des factures - 2024</p>
+    </footer>
+  </body>
+</html>

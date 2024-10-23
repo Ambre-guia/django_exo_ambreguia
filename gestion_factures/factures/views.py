@@ -38,10 +38,12 @@ def facture_list(request):
         factures = Facture.objects.filter(client_id=client_id)
     else:
         factures = Facture.objects.all()
-    
+        
+    is_empty = not factures.exists()
     context = {
             'factures': factures,
-            'clients': clients,  
+            'clients': clients,
+            'is_empty': is_empty,  
         }
     return render(request, 'factures/facture_list.html', context)
 

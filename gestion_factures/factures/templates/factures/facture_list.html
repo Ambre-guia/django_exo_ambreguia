@@ -16,6 +16,9 @@
         <button type="submit">Filtrer</button>
     </form>
 
+    {% if is_empty %}
+        <p>Aucune facture trouvée.</p>
+    {% else %}
     <table border="1">
         <thead>
             <tr>
@@ -48,5 +51,5 @@
             {% endfor %}
         </tbody>
     </table>
-
+    {% endif %}
 {% endblock %}

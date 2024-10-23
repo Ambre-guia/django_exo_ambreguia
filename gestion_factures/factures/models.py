@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 class Categorie(models.Model):
     nom = models.CharField(max_length=100)
@@ -10,6 +11,7 @@ class Categorie(models.Model):
 class Client(models.Model):
     nom = models.CharField(max_length=100)
     email = models.EmailField()
+    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE, related_name='client')
 
     def __str__(self):
         return self.nom
@@ -25,4 +27,4 @@ class Facture(models.Model):
     est_paye = models.BooleanField(default=False) 
 
     def __str__(self):
-        return f"Facture {self.id} - {self.client.nom}"
+        return f"{self.titre} - {self.client.nom}"

@@ -14,6 +14,17 @@
         <li><a href="{% url 'facture_create' %}">Créer une facture</a></li>
         <li><a href="{% url 'client_create' %}">Créer un client</a></li>
         <li><a href="{% url 'categorie_create' %}">Créer une catégorie</a></li>
+
+         {% if user.is_authenticated %}
+                <li>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit">Logout</button>
+                    </form>
+                </li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+            {% endif %}
       </ul>
     </nav>
 

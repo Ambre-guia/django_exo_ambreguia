@@ -16,9 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import handler403
+from factures import views as factures_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('factures/', include('factures.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
 ]
+handler403 = factures_views.custom_403_view

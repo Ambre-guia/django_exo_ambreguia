@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}403 - accès interdit{% endblock %}
+
+{% block content %}
+<h1>Accès interdit</h1>
+<p>Vous n'avez pas les permissions nécessaires pour accéder à cette page.</p>
+<a href="{% url 'login' %}">Connectez-vous</a>
+
+{% endblock %}

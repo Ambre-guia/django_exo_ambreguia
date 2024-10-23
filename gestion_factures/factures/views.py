@@ -1,5 +1,5 @@
-from django.shortcuts import render,  redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from .models import Facture, Categorie, Client
 from .forms import FactureForm
 from .forms import ClientForm
@@ -7,6 +7,10 @@ from .forms import CategorieForm
 
 from django.contrib.auth.models import User
 from .forms import SignUpForm
+from factures.decorators import superuser_required
+
+def custom_403_view(request, exception=None):
+    return render(request, '403.html', status=403)
 
 def signup(request):
     if request.method == 'POST':
@@ -36,7 +40,8 @@ def facture_list(request):
         }
     return render(request, 'factures/facture_list.html', context)
 
-@user_passes_test(lambda u: u.is_superuser)
+@login_required
+@superuser_required
 def facture_create(request):
     if request.method == 'POST':
         form = FactureForm(request.POST)
@@ -51,7 +56,8 @@ def facture_create(request):
         form = FactureForm()
     return render(request, 'factures/facture_form.html', {'form': form})
 
-@user_passes_test(lambda u: u.is_superuser)
+@login_required
+@superuser_required
 def facture_update(request, pk):
     facture = get_object_or_404(Facture, pk=pk)
     if request.method == 'POST':
@@ -63,7 +69,8 @@ def facture_update(request, pk):
         form = FactureForm(instance=facture)
     return render(request, 'factures/facture_form.html', {'form': form})
 
-@user_passes_test(lambda u: u.is_superuser)
+@login_required
+@superuser_required
 def facture_delete(request, pk):
     facture = get_object_or_404(Facture, pk=pk)
     if request.method == 'POST':
@@ -71,12 +78,14 @@ def facture_delete(request, pk):
         return redirect('facture_list')
     return render(request, 'factures/facture_confirm_delete.html', {'facture': facture})
 
+
 @login_required
 def facture_detail(request, pk):
     facture = get_object_or_404(Facture, pk=pk)
     return render(request, 'factures/facture_detail.html', {'facture': facture})
 
-@user_passes_test(lambda u: u.is_superuser)
+@login_required
+@superuser_required
 def client_create(request):
     if request.method == 'POST':
         form = ClientForm(request.POST)
@@ -87,7 +96,8 @@ def client_create(request):
         form = ClientForm()
     return render(request, 'clients/client_form.html', {'form': form})
 
-@user_passes_test(lambda u: u.is_superuser)
+@login_required
+@superuser_required
 def categorie_create(request):
     if request.method == 'POST':
         form = CategorieForm(request.POST)

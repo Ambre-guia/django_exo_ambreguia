@@ -6,7 +6,8 @@ from .forms import ClientForm
 from .forms import CategorieForm
 
 from django.contrib.auth.models import User
-from .forms import SignUpForm
+from .forms import SignUpForm, UserForm
+from django.core.exceptions import PermissionDenied
 from factures.decorators import superuser_required
 
 def custom_403_view(request, exception=None):
@@ -24,6 +25,10 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
 
+
+##################
+## Facture app ###
+##################
 @login_required
 def facture_list(request):
 
@@ -107,3 +112,50 @@ def categorie_create(request):
     else:
         form = CategorieForm()
     return render(request, 'categories/categorie_form.html', {'form': form})
+
+##################
+## User gestion ##
+##################
+@login_required
+def user_list(request):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+    users = User.objects.all()
+    return render(request, 'factures/user_list.html', {'users': users})
+
+@login_required
+def user_create(request):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+    if request.method == "POST":
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('user_list')
+    else:
+        form = UserForm()
+    return render(request, 'factures/user_form.html', {'form': form})
+
+@login_required
+def user_update(request, user_id):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+    user = get_object_or_404(User, id=user_id)
+    if request.method == "POST":
+        form = UserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('user_list')
+    else:
+        form = UserForm(instance=user)
+    return render(request, 'factures/user_form.html', {'form': form})
+
+@login_required
+def user_delete(request, user_id):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+    user = get_object_or_404(User, id=user_id)
+    if request.method == "POST":
+        user.delete()
+        return redirect('user_list')
+    return render(request, 'factures/user_confirm_delete.html', {'user': user})

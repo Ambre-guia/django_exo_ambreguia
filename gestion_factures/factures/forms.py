@@ -44,3 +44,11 @@ class CategorieForm(forms.ModelForm):
     class Meta:
         model = Categorie
         fields = ['nom']
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password', 'is_superuser', 'is_staff']
+        widgets = {
+            'password': forms.PasswordInput(),
+        }

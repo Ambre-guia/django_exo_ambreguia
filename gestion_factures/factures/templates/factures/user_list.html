@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block content %}
+<h1>Liste des utilisateurs</h1>
+<table>
+    <tr>
+        <th>Nom d'utilisateur</th>
+        <th>Email</th>
+        <th>Superuser</th>
+        <th>Actions</th>
+    </tr>
+    {% for user in users %}
+    <tr>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.is_superuser }}</td>
+        <td>
+            <a href="{% url 'user_update' user.id %}">Modifier</a>
+            <form action="{% url 'user_delete' user.id %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">Supprimer</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<a href="{% url 'user_create' %}">Créer un nouvel utilisateur</a>
+{% endblock %}

@@ -129,8 +129,9 @@ class FactureDetailViewTest(TestCase):
         self.assertRedirects(response, f'/accounts/login/?next=/factures/{self.facture.id}/')
 
     def test_facture_detail_view_not_found(self):
+        self.test_client.login(username='testuser', password='testpass')
         response = self.test_client.get(reverse('facture_detail', args=[999]))  
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 404)
 
 ##############################
 ## Test facture vue create ###

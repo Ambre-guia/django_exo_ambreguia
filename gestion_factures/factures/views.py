@@ -65,8 +65,8 @@ def facture_create(request):
 
 @login_required
 @superuser_required
-def facture_update(request, pk):
-    facture = get_object_or_404(Facture, pk=pk)
+def facture_update(request, facture_id):
+    facture = get_object_or_404(Facture, id=facture_id)
     if request.method == 'POST':
         form = FactureForm(request.POST, instance=facture)
         if form.is_valid():

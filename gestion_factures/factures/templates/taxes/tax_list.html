@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Liste des Taxes{% endblock %}
+
+{% block content %}
+<h1>Liste des Taxes</h1>
+
+<a href="{% url 'create_tax' %}">Ajouter une nouvelle taxe</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>Pays</th>
+            <th>Taux de taxe (%)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for tax in taxes %}
+        <tr>
+            <td>{{ tax.country }}</td>
+            <td>{{ tax.rate }}</td>
+            <td>
+                <a href="{% url 'edit_tax' tax.id %}">Modifier</a>
+                <a href="{% url 'delete_tax' tax.id %}">Supprimer</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

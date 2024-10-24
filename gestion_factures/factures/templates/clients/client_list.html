@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des clients{% endblock %}
+
+{% block content %}
+<h1>Liste des clients</h1>
+<table>
+    <tr>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Pays</th>
+        <th>Actions</th>
+    </tr>
+    {% for client in clients %}
+    <tr>
+        <td>{{ client.nom }}</td>
+        <td>{{ client.email }}</td>
+        <td>{{ client.country }}</td>
+        <td>
+            <a href="#">Modifier</a>
+            <form action="#" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">Supprimer</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<a href="{% url 'client_create' %}">Créer un nouveau client</a>
+{% endblock %}

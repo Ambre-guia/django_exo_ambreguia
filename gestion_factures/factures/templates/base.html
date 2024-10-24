@@ -11,9 +11,11 @@
     <nav>
       <ul>
         <li><a href="{% url 'facture_list' %}">Liste des factures</a></li>
-        <li><a href="{% url 'facture_create' %}">Créer une facture</a></li>
-        <li><a href="{% url 'client_create' %}">Créer un client</a></li>
-        <li><a href="{% url 'categorie_create' %}">Créer une catégorie</a></li>
+        <li><a href="#">Liste des articles</a></li>
+        <li><a href="{% url 'tax_list' %}">Liste des taxes</a></li>
+        <li><a href="#">Liste des réductions</a></li>
+        <li><a href="{% url 'client_list' %}">Liste des client</a></li>
+        <li><a href="{% url 'categories_list' %}">Liste des catégories</a></li>
         {% if request.user.is_superuser %}
             <li><a href="{% url 'user_list' %}">Liste des utilisateurs</a></li>
         {% endif %}

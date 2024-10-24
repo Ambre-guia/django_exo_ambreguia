@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Supprimer la Taxe{% endblock %}
+
+{% block content %}
+<h1>Supprimer la Taxe</h1>
+
+<p>Êtes-vous sûr de vouloir supprimer la taxe pour {{ tax.country }}?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Oui, supprimer</button>
+    <a href="{% url 'tax_list' %}">Annuler</a>
+</form>
+
+{% endblock %}

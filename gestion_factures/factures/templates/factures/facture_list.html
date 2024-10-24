@@ -15,7 +15,7 @@
         </select>
         <button type="submit">Filtrer</button>
     </form>
-
+    <a href="{% url 'facture_create' %}">Créer une facture</a>
     {% if is_empty %}
         <p>Aucune facture trouvée.</p>
     {% else %}
@@ -24,7 +24,6 @@
             <tr>
                 <th>Titre</th>
                 <th>Client</th>
-                <th>Description</th>
                 <th>Montant</th>
                 <th>Catégorie</th>
                 <th>Date d'émission</th>
@@ -37,7 +36,6 @@
             <tr>
                 <td>{{ facture.titre }}</td>
                 <td>{{ facture.client.nom }}</td>
-                <td>{{ facture.description }}</td>
                 <td>{{ facture.montant }}</td>
                 <td>{{ facture.categorie.nom }}</td>
                 <td>{{ facture.date_emission }}</td>

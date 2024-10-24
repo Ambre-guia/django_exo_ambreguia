@@ -1,8 +1,10 @@
 from django import forms
-from .models import Facture, Client, Categorie
+from .models import Facture, Client, Categorie, Tax, Article
 
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+
+from django.forms import inlineformset_factory
 
 
 class UserAdminForm(forms.ModelForm):
@@ -19,7 +21,8 @@ class SignUpForm(UserCreationForm):
 class FactureForm(forms.ModelForm):
     class Meta:
         model = Facture
-        fields = ['titre','client', 'categorie', 'montant', 'description', 'date_paiement', 'est_paye']
+        fields = ['titre', 'client', 'categorie', 'montant', 'date_paiement', 'est_paye', 'discounts']
+
         widgets = {
                     'date_paiement': forms.DateInput(attrs={'type': 'date'}),
                 }
@@ -38,7 +41,10 @@ class FactureForm(forms.ModelForm):
 class ClientForm(forms.ModelForm):
     class Meta:
         model = Client
-        fields = ['nom', 'email']
+        fields = ['nom', 'email', 'country']
+        widgets = {
+            'country': forms.Select(attrs={'class': 'form-control'}),
+        }
 
 class CategorieForm(forms.ModelForm):
     class Meta:
@@ -52,3 +58,15 @@ class UserForm(forms.ModelForm):
         widgets = {
             'password': forms.PasswordInput(),
         }
+
+class TaxForm(forms.ModelForm):
+    class Meta:
+        model = Tax
+        fields = ['country', 'rate']
+
+class ArticleForm(forms.ModelForm):
+    class Meta:
+        model = Article
+        fields = ['description', 'unit_price', 'quantity']
+
+ArticleFormSet = inlineformset_factory(Facture, Article, form=ArticleForm, extra=1, can_delete=True)

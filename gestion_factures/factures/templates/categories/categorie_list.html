@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des catégories{% endblock %}
+
+{% block content %}
+<h1>Liste des catégories</h1>
+<table>
+    <tr>
+        <th>Nom</th>
+        <th>Actions</th>
+    </tr>
+    {% for categorie in categories %}
+    <tr>
+        <td>{{ categorie.nom }}</td>
+        <td>
+            <a href="#">Modifier</a>
+            <form action="#" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">Supprimer</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<a href="{% url 'categorie_create' %}">Créer une nouvelle catégorie</a>
+{% endblock %}

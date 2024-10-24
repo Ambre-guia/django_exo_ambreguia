@@ -17,9 +17,10 @@ Installer mon projet avec npm
 - Login / register
 - Factures
 - Articles
-- Taxes
+- Taxes (non vérifier du fonctionnement)
 - Clients
 - Utilisateurs (en superuser uniquement)
+- Réduction (non implémenter par temps)
 
 
 ## Running Tests

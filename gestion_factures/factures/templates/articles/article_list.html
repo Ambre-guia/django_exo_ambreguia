@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des articles{% endblock %}
+
+{% block content %}
+<h1>Liste des articles</h1>
+    
+    <a href="{% url 'article_create' %}">Créer une facture</a>
+    {% if is_empty %}
+        <p>Aucune facture trouvée.</p>
+    {% else %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prix unitaire</th>
+                <th>Quantité</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for article in articles %}
+            <tr>
+                <td>{{ article.description }}</td>
+                <td>{{ article.unit_price }}</td>
+                <td>{{ article.quantity }}</td>
+                <td>
+                    <a href="{% url 'article_detail' article.id %}">Voir</a> |
+                    <a href="{% url 'article_update' article.id %}">Modifier</a> |
+                    <a href="{% url 'article_delete' article.id %}">Supprimer</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+{% endblock %}

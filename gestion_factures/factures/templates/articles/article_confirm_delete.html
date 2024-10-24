@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Supprimer la article{% endblock %}
+{% block content %}
+    <h1>Êtes-vous sûr de vouloir supprimer cet article ?</h1>
+    <p>Article : {{ article.description }}</p>
+    <p>Montant : {{ article.unit_price }}</p>
+    <p>Quantité : {{ article.quantity }}</p>
+
+    <form method="POST">
+      {% csrf_token %}
+      <button type="submit">Confirmer la suppression</button>
+    </form>
+
+    <a href="{% url 'article_list' %}">Retour à la liste des articles</a>
+
+{% endblock %}

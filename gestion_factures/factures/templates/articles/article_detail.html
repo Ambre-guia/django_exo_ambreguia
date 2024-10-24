@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Détails de l'article{% endblock %}
+
+{% block content %}
+    <h1>Détails de l'article {{ article.description }}</h1>
+    <p>Prix unitaire : {{ article.unit_price}}</p>
+    <p>Quantité : {{ article.quantity }}</p>
+
+    <a href="{% url 'article_update' article.id %}">Modifier</a> |
+    <a href="{% url 'article_delete' article.id %}">Supprimer</a> |
+    <a href="{% url 'article_list' %}">Retour à la liste</a>
+
+{% endblock %}

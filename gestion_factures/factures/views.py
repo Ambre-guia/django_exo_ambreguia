@@ -3,11 +3,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 
-from .models import Facture, Categorie, Client, Tax
+from .models import Facture, Categorie, Client, Tax, Article
 from .forms import FactureForm
 from .forms import ClientForm
 from .forms import CategorieForm
 from .forms import TaxForm
+from .forms import ArticleForm
 from .forms import SignUpForm, UserForm
 from .forms import FactureForm, ArticleFormSet
 
@@ -203,10 +204,12 @@ def user_delete(request, user_id):
 #################
 ## Tax gestion ##
 #################
+@login_required
 def tax_list(request):
     taxes = Tax.objects.all()
     return render(request, 'taxes/tax_list.html', {'taxes': taxes})
 
+@login_required
 def create_tax(request):
     if request.method == 'POST':
         form = TaxForm(request.POST)
@@ -217,6 +220,7 @@ def create_tax(request):
         form = TaxForm()
     return render(request, 'taxes/tax_form.html', {'form': form})
 
+@login_required
 def edit_tax(request, tax_id):
     tax = get_object_or_404(Tax, id=tax_id)
     if request.method == 'POST':
@@ -228,9 +232,49 @@ def edit_tax(request, tax_id):
         form = TaxForm(instance=tax)
     return render(request, 'taxes/tax_form.html', {'form': form})
 
+@login_required
 def delete_tax(request, tax_id):
     tax = get_object_or_404(Tax, id=tax_id)
     if request.method == 'POST':
         tax.delete()
         return redirect('tax_list')
     return render(request, 'taxes/tax_confirm_delete.html', {'tax': tax})
+
+#####################
+## Article gestion ##
+#####################
+@login_required
+def article_list(request):
+    articles = Article.objects.all()
+    return render(request, 'articles/article_list.html', {'articles': articles})
+
+@login_required
+def article_create(request):
+    if request.method == 'POST':
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('article_list')
+    else:
+        form = ArticleForm()
+    return render(request, 'articles/article_form.html', {'form': form})
+
+@login_required
+def article_update(request, article_id):
+    article = get_object_or_404(Article, id=article_id)
+    if request.method == 'POST':
+        form = ArticleForm(request.POST, instance=article)
+        if form.is_valid():
+            form.save()
+            return redirect('article_list')
+    else:
+        form = ArticleForm(instance=article)
+    return render(request, 'articles/article_form.html', {'form': form})
+
+@login_required
+def article_delete(request, article_id):
+    article = get_object_or_404(Article, id=article_id)
+    if request.method == 'POST':
+        article.delete()
+        return redirect('article_list')
+    return render(request, 'articles/article_confirm_delete.html', {'article': article})
